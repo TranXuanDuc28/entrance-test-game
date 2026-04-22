@@ -62,8 +62,6 @@ const GamePoint = ({ point, onClick, totalTime, isGameOver, externalFade }) => {
         position: 'absolute',
         left: `${point.x}%`,
         top: `${point.y}%`,
-        width: '50px',
-        height: '50px',
         borderRadius: '50%',
         border: `2px solid ${isFading ? '#fbbf24' : 'white'}`,
         display: 'flex',

@@ -101,87 +101,88 @@ const App = () => {
   };
 
   return (
-    <div className="game-container" style={{ width: '100%', maxWidth: '800px', padding: '20px' }}>
-      <div className="glass-panel" style={{ padding: '24px', position: 'relative', minHeight: '600px', display: 'flex', flexDirection: 'column' }}>
-
-        {/* Header Section */}
-        <div style={{ marginBottom: '20px' }}>
-          <h2 style={{
-            color: gameState === 'won' ? 'var(--success-color)' : gameState === 'lost' ? 'var(--error-color)' : 'var(--text-primary)',
-            fontSize: '1.5rem',
-            marginBottom: '16px',
-            textTransform: 'uppercase',
-            letterSpacing: '2px'
-          }}>
-            {gameState === 'won' ? 'ALL CLEAREDS' : gameState === 'lost' ? 'GAME OVER' : "LET'S PLAY"}
-          </h2>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto auto', gap: '12px', alignItems: 'end' }}>
-            <div>
-              <label>Points</label>
-              <input
-                type="number"
-                value={pointsCount}
-                onChange={(e) => setPointsCount(parseInt(e.target.value) || 0)}
-                disabled={gameState === 'playing'}
-              />
+    <div className="container py-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-lg-10">
+          <div className="glass-panel p-3 p-md-4 shadow-lg" style={{ position: 'relative', minHeight: '650px', display: 'flex', flexDirection: 'column' }}>
+            
+            {/* Header Section */}
+            <div className="mb-4">
+              <h2 className={`h3 mb-3 text-uppercase fw-bold ${
+                gameState === 'won' ? 'text-success' : gameState === 'lost' ? 'text-danger' : 'text-white'
+              }`} style={{ letterSpacing: '2px' }}>
+                {gameState === 'won' ? 'ALL CLEAREDS' : gameState === 'lost' ? 'GAME OVER' : "LET'S PLAY"}
+              </h2>
+              
+              <div className="row g-3 align-items-end">
+                <div className="col-6 col-md-3">
+                  <label className="form-label small text-secondary mb-1">Points</label>
+                  <input 
+                    type="number" 
+                    className="form-control form-control-sm bg-dark text-white border-secondary"
+                    value={pointsCount} 
+                    onChange={(e) => setPointsCount(parseInt(e.target.value) || 0)} 
+                    disabled={gameState === 'playing'}
+                  />
+                </div>
+                <div className="col-6 col-md-3">
+                  <label className="form-label small text-secondary mb-1">Time (s)</label>
+                  <input 
+                    type="number" 
+                    step="0.1" 
+                    className="form-control form-control-sm bg-dark text-white border-secondary"
+                    value={fadeTime} 
+                    onChange={(e) => setFadeTime(parseFloat(e.target.value) || 0)} 
+                    disabled={gameState === 'playing'}
+                  />
+                </div>
+                <div className="col-6 col-md-3">
+                  <button className="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center gap-2" onClick={handleRestart} style={{ height: '31px' }}>
+                    <RotateCcw size={14} /> {gameState === 'initial' ? 'Play' : 'Restart'}
+                  </button>
+                </div>
+                <div className="col-6 col-md-3">
+                  <button 
+                    className={`btn btn-sm w-100 d-flex align-items-center justify-content-center gap-2 ${isAutoPlay ? 'btn-primary' : 'btn-outline-light'}`}
+                    onClick={toggleAutoPlay}
+                    style={{ height: '31px' }}
+                  >
+                    {isAutoPlay ? <Zap size={14} /> : <ZapOff size={14} />}
+                    Auto Play {isAutoPlay ? 'ON' : 'OFF'}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="mt-3 d-flex justify-content-between text-secondary small fw-medium">
+                <span>Time: {gameTimer.toFixed(1)}s</span>
+                {gameState === 'playing' && <span>Next: {nextExpected}</span>}
+              </div>
             </div>
-            <div>
-              <label>Time (s)</label>
-              <input
-                type="number"
-                step="0.1"
-                value={fadeTime}
-                onChange={(e) => setFadeTime(parseFloat(e.target.value) || 0)}
-                disabled={gameState === 'playing'}
-              />
-            </div>
-            <button className="btn btn-primary" onClick={handleRestart} style={{ height: '38px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <RotateCcw size={16} /> {gameState === 'initial' ? 'Play' : 'Restart'}
-            </button>
 
-            {/* Case 4 & 5: Auto Play Button */}
-            <button
-              className={`btn ${isAutoPlay ? 'btn-primary' : ''}`}
-              onClick={toggleAutoPlay}
-              style={{ height: '38px', display: 'flex', alignItems: 'center', gap: '8px' }}
-            >
-              {isAutoPlay ? <Zap size={16} /> : <ZapOff size={16} />}
-              Auto Play {isAutoPlay ? 'ON' : 'OFF'}
-            </button>
+            {/* Board Section */}
+            <div className="game-board flex-grow-1 position-relative rounded-3" style={{ 
+              background: 'rgba(0,0,0,0.2)',
+              overflow: 'hidden',
+              border: '1px solid var(--glass-border)'
+            }}>
+              {points.map(p => (
+                <GamePoint 
+                  key={p.id} 
+                  point={p} 
+                  onClick={handlePointClick} 
+                  totalTime={fadeTime}
+                  isGameOver={gameState !== 'playing'}
+                  externalFade={fadingPoints.has(p.value)}
+                />
+              ))}
+            </div>
           </div>
-
-          <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-            <span>Time: {gameTimer.toFixed(1)}s</span>
-            {gameState === 'playing' && <span>Next: {nextExpected}</span>}
+          
+          {/* Footer Info */}
+          <div className="mt-4 text-center text-secondary small">
+            Click numbers in ascending order to win.
           </div>
         </div>
-
-        {/* Board Section */}
-        <div className="game-board" style={{
-          flex: 1,
-          border: '1px solid var(--glass-border)',
-          borderRadius: '12px',
-          position: 'relative',
-          background: 'rgba(0,0,0,0.2)',
-          overflow: 'hidden'
-        }}>
-          {points.map(p => (
-            <GamePoint
-              key={p.id}
-              point={p}
-              onClick={handlePointClick}
-              totalTime={fadeTime}
-              isGameOver={gameState !== 'playing'}
-              externalFade={fadingPoints.has(p.value)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Footer Info */}
-      <div style={{ marginTop: '20px', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
-        Click numbers in ascending order to win.
       </div>
     </div>
   );

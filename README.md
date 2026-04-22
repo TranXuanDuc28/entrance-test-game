@@ -1,16 +1,44 @@
-# React + Vite
+# 🎮 Let's Play - Number Clearing Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Một trò chơi trí tuệ đơn giản nhưng đầy thử thách, yêu cầu bạn phải nhanh mắt và chính xác để xóa các điểm số theo đúng thứ tự.
 
-Currently, two official plugins are available:
+## 🚀 Tính năng chính
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Trò chơi bao gồm đầy đủ 6 yêu cầu kỹ thuật:
+1.  **Chế độ Win**: Hiển thị thông báo "ALL CLEAREDS" khi bạn xóa hết các số theo đúng thứ tự (1, 2, 3...).
+2.  **Chế độ Loss**: Hiển thị "GAME OVER" ngay lập tức nếu bạn click sai thứ tự.
+3.  **Nút Restart**: Cho phép làm mới trò chơi, tạo lại các vị trí ngẫu nhiên bất cứ lúc nào.
+4.  **Auto Play**: Chế độ tự động chơi, máy tính sẽ tự tìm và click theo đúng thứ tự giúp bạn.
+5.  **Tùy chỉnh linh hoạt**:
+    *   Nhập số lượng điểm (Points) tùy ý (hỗ trợ lên tới hàng nghìn điểm).
+    *   Tùy chỉnh thời gian biến mất (Fade time) của mỗi điểm.
+6.  **Hiệu ứng mờ dần (Fade-out)**: Mỗi điểm khi được chọn sẽ có bộ đếm ngược thời gian và mờ dần trước khi biến mất hoàn toàn.
 
-## React Compiler
+## ✨ Điểm nổi bật về giao diện
+- **Thiết kế hiện đại**: Phong cách Glassmorphism (hiệu ứng kính mờ) sang trọng.
+- **Hiệu ứng mượt mà**: Sử dụng thư viện `framer-motion` cho các chuyển động scale và opacity.
+- **Responsive**: Hiển thị tốt trên cả máy tính và điện thoại di động (Mobile-friendly).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Công nghệ sử dụng
+- **Core**: ReactJS + Vite
+- **Animation**: Framer Motion
+- **Icons**: Lucide React
+- **Styling**: Vanilla CSS (Custom CSS Variables)
 
-## Expanding the ESLint configuration
+## 📦 Hướng dẫn cài đặt và chạy thử
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1.  **Cài đặt dependencies**:
+    ```bash
+    npm install
+    ```
+2.  **Chạy trên môi trường local**:
+    ```bash
+    npm run dev
+    ```
+    Mở trình duyệt và truy cập: `http://localhost:5173`
+
+## 📖 Cách chơi
+1. Nhập số lượng điểm mong muốn vào ô **Points**.
+2. Nhấn nút **Play/Restart** để bắt đầu.
+3. Click vào các hình tròn theo thứ tự từ nhỏ đến lớn (1 -> 2 -> 3...).
+4. Trò chơi kết thúc khi bạn xóa hết tất cả các điểm hoặc click sai thứ tự.
